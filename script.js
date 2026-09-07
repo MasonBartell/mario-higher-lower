@@ -25,3 +25,92 @@ const games = [
     { title: "Mario Tennis Aces", score: 75 },
     { title: "Super Mario Party", score: 71 },
 ];
+
+function pickGame(){
+    const index = Math.floor(Math.random() * games.length);
+    return games[index]
+}
+function putGameOnScreen(){
+    document.getElementById("game-title").textContent = game1.title;
+    document.getElementById("score").textContent = game1.score;
+    document.getElementById("game-title-2").textContent = game2.title;
+    document.getElementById("score-2").textContent = "?";
+}
+
+let currentStreak = 0
+let game1 = pickGame();
+let game2 = pickGame();
+while(game1 == game2){
+    game2 = pickGame();
+}
+
+putGameOnScreen();
+
+document.querySelector(".higher-button").addEventListener("click", function(){
+    document.getElementById("score-2").textContent = game2.score;
+    if(game2.score >= game1.score) {
+        console.log("Correct!");
+        document.querySelector(".higher-button").disabled = true;
+        document.querySelector(".lower-button").disabled = true;
+        currentStreak++;
+        document.getElementById("streak-count").textContent = currentStreak;
+        document.getElementById("score-2").textContent = game2.score;
+        setTimeout(function() {
+        game1 = game2;
+        game2 = pickGame();
+        while(game1 == game2){
+            game2 = pickGame();
+        }
+        putGameOnScreen();
+        document.querySelector(".higher-button").disabled = false;
+        document.querySelector(".lower-button").disabled = false;
+        },1300);
+    }
+    else{
+        alert("GAMEOVER! Final Streak: " + currentStreak)
+        currentStreak = 0;
+        document.getElementById("streak-count").textContent = currentStreak;
+        game1 = pickGame();
+        game2 = pickGame();
+         while(game1 == game2){
+            game2 = pickGame();
+        }
+        putGameOnScreen();
+    }
+
+});
+
+document.querySelector(".lower-button").addEventListener("click", function(){
+    document.getElementById("score-2").textContent = game2.score;
+    if(game2.score <= game1.score) {
+        console.log("CORRECT!");
+        document.querySelector(".higher-button").disabled = true;
+        document.querySelector(".lower-button").disabled = true;
+        currentStreak++;
+        document.getElementById("streak-count").textContent = currentStreak;
+        document.getElementById("score-2").textContent = game2.score;
+        setTimeout(function() {
+        game1 = game2;
+        game2 = pickGame();
+        while(game1 == game2){
+            game2 = pickGame();
+        }
+        putGameOnScreen();
+        document.querySelector(".higher-button").disabled = false;
+        document.querySelector(".lower-button").disabled = false;
+        },1300);
+    }
+    else{
+        alert("GAMEOVER! Final Streak: " + currentStreak)
+        currentStreak = 0;
+        document.getElementById("streak-count").textContent = currentStreak;
+        game1 = pickGame();
+        game2 = pickGame();
+        while(game1 == game2){
+            game2 = pickGame();
+        }
+        putGameOnScreen();
+    }
+
+});
+
