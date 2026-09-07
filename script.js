@@ -39,12 +39,23 @@ function putGameOnScreen(){
     document.getElementById("game-image-2").src = game2.image;
 }
 
+
+
 let currentStreak = 0
+let bestStreak = 0
 let game1 = pickGame();
 let game2 = pickGame();
 while(game1 == game2){
     game2 = pickGame();
 }
+
+let savedBest = localStorage.getItem("bestStreak");
+if (savedBest === null) {
+    bestStreak = 0;
+} else {
+    bestStreak = Number(savedBest);
+}
+document.getElementById("best-streak-count").textContent = bestStreak;
 
 putGameOnScreen();
 
@@ -70,6 +81,12 @@ document.querySelector(".higher-button").addEventListener("click", function(){
     }
     else{
         alert("GAMEOVER! Final Streak: " + currentStreak)
+        if(currentStreak > bestStreak) {
+            bestStreak = currentStreak;
+            localStorage.setItem("bestStreak", bestStreak);
+            document.getElementById("best-streak-count").textContent = bestStreak;
+            
+        }
         currentStreak = 0;
         document.getElementById("streak-count").textContent = currentStreak;
         game1 = pickGame();
@@ -104,6 +121,11 @@ document.querySelector(".lower-button").addEventListener("click", function(){
     }
     else{
         alert("GAMEOVER! Final Streak: " + currentStreak)
+        if(currentStreak > bestStreak) {
+            bestStreak = currentStreak;
+            localStorage.setItem("bestStreak", bestStreak);
+            document.getElementById("best-streak-count").textContent = bestStreak;
+        }
         currentStreak = 0;
         document.getElementById("streak-count").textContent = currentStreak;
         game1 = pickGame();
